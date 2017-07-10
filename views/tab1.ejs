@@ -1,0 +1,89 @@
+<%- include('components/header')%>
+<div class="container">
+    <div class="row">
+        <h3>请完善个人信息</h3>
+        <div class="col-md-6">
+            <form role="form">
+                <div class="form-group">
+                    <label for="id">学号</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                           placeholder="请输入学号">
+                </div>
+                <div class="form-group">
+                    <label for="className">班级</label>
+                    <select class="form-control" id="className" name="className">
+                        <option>请选择</option>
+                        <option>物联1401</option>
+                        <option>物联1402</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           placeholder="请输入姓名">
+                </div>
+                <div class="form-group">
+                    <label for="groupName">小组名</label>
+                    <input type="text" class="form-control" id="groupName" name="groupName"
+                           placeholder="请输入小组名">
+                </div>
+            </form>
+            <button type="button" class="btn btn-primary" id="saveInfo">提交信息</button>
+            <button type="button" class="btn btn-default" id="resetInfo">清空信息</button>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        getInfo();
+        $('#saveInfo').click(saveInfo);
+        $('#resetInfo').click(resetInfo);
+        //设置一个标志位来代表是新建还是更新
+        var flag = 0;
+        //获取信息
+        function getInfo() {
+            var url = 'http://localhost:3000/tab1/getInfo';
+            $.get(url,function (data) {
+                if (data.code == 0) {
+                    flag = 1;
+                    var data = data.data;
+                    $('#id').val(data.id);
+                    $('#className').val(data.className);
+                    $('#name').val(data.name);
+                    $('#groupName').val(data.groupName);
+                }
+            })
+        }
+        //更新信息
+        function saveInfo() {
+            if (flag == 1){
+                var url = 'http://localhost:3000/tab1/update';
+            }else {
+                var url = 'http://localhost:3000/tab1/create';
+            }
+
+            const params = {
+                id: $('#id').val(),
+                className: $('#className').val(),
+                name: $('#name').val(),
+                groupName: $('#groupName').val()
+            }
+            $.post(url, params, function (data) {
+                if (data.code == 0) {
+                    getInfo();
+                    alert(data.content);
+                    //重新从数据库拉取信息
+                }
+            })
+        }
+        //清空信息
+        function resetInfo() {
+            $('#id').val('');
+            $('#className').val('');
+            $('#name').val('');
+            $('#groupName').val('');
+        }
+    })
+</script>
+<%- include('components/footer')%>

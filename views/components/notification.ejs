@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <% if (success) {%>
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert">
+                    &times;
+                </a>
+                <p><%= success %></p>
+            </div>
+            <% } %>
+            <% if (error) {%>
+            <div class="alert alert-warning">
+                <a href="#" class="close" data-dismiss="alert">
+                    &times;
+                </a>
+                <p><%= error %></p>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>

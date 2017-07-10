@@ -1,0 +1,52 @@
+.cus-header {
+}
+.cus-footer {
+margin: 5px auto;
+}
+.cus-404-center {
+    margin-top: 300px;
+}
+#nav-myIndex {
+    color:purple;
+}
+#nav-monitor {
+    color: red;
+}
+#nav-healthInfo {
+    color: green;
+}
+#nav-nursing {
+    color: darkseagreen;
+}
+.content-center
+{
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.search-input{
+    height: 50px;
+
+}
+.tab-main{
+    background-color: whitesmoke;
+    height: 300px;
+
+}
+#tab0{
+    background-color: aliceblue;
+    opacity: 0.8;
+}
+#tab1{
+    opacity: 0.6;
+}
+#tab2{
+    opacity: 0.4;
+}
+#tab3{
+    opacity: 0.2;
+}
+#tab4{
+    opacity: 0.1;
+}
