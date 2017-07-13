@@ -8,27 +8,46 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            　 <a href="##" class="navbar-brand" style="color: black">物联网综合实训信息平台</a>
+            　 <a href="##" class="navbar-brand" style="color: black">智能家居</a>
         </div>
 
         <div class="collapse navbar-collapse" id="example-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/home" id="nav-home" style="color: #4cae4c">我的主页</a></li>
-                <li><a href="/tab1" id="nav-tab1" style="color: orangered">自定义1</a></li>
-                <li><a href="/tab2" id="nav-tab2" style="color: green">自定义2</a></li>
-                <li><a href="/tab3" id="nav-tab3" style="color: purple">自定义3</a></li>
-                <li><a href="/myComment" id="nav-comments" style="color: purple">我的心得</a></li>
-                <li><a href="/comments" id="nav-comments" style="color: purple">心得展示</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+
+            <div class="nav navbar-nav">
+                <li><a href="/home" id="nav-home" style="color: #5b6bae">主页</a></li>
+                <li><a href="/inf" id="nav-tab1" style="color: orangered;margin-left:50px">知识介绍</a></li>
+                <li><a href="/tab2" id="nav-tab2" style="color: green;margin-left:50px">应用展示</a></li>
+                <li><a href="/tab3" id="nav-tab3" style="color: purple;margin-left:50px">发展趋势</a></li>
+                <li><a href="/myComment" id="nav-comments" style="color: #807130;margin-left:50px">心得体会</a></li>
+            </div>
+            <div class="nav navbar-nav navbar-right">
                 <% if (!user) { %>
                 <li><a href="/login">登录</a></li>
                 <li><a href="/register">注册</a></li>
                 <% } else { %>
-                <li><a href="/logout">退出登录</a></li>
+                        <li><a  id="user"></a></li>
+                        <li><a href="/logout" style="color: #393D49">退出登录</a></li>
                 <% } %>
-            </ul>
+            </div>
         </div>
     </div>
 </nav>
+<script>
+    $(document).ready(function () {
+        getInfo();
+        //获取信息
+        function getInfo() {
+            var str = '<div><span class="state"></span></div>';
+            var url = 'http://localhost:3000/nav/getInfo';
+            $.get(url,function(data){
+             if(data.code==0){
+             var data=data.data;
+             $('#user').empty();
+             $('#user').append(str);
+             $('.state').text(data.userName);
+             }
+             })
+        }
+    })
+</script>-->
 <div style="height: 60px"></div>

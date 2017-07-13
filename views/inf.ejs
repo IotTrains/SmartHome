@@ -1,0 +1,159 @@
+<%- include('components/header')%>
+<link href="/css/NavigationTree.css" rel="stylesheet">
+<div class="container">
+    <div class="infbg clearfix">
+        <img src="img/bg.gif" width="100%" height="70%">
+    </div>
+    <div class="inf">
+    <div class="inf1">
+        <h1 class="text-info">智能家居</h1>
+        <span style="font-size: 120%">智能家居（英文：smart home, home automation）是以住宅为平台，利用综合布线技术、网络通信技术、 安全防范技术、自动控制技术、音视频技术将家居生活有关的设施集成，构建高效的住宅设施与家庭日程事务的管理系统，提升家居安全性、便利性、舒适性、艺术性，并实现环保节能的居住环境。</span>
+        <h2>发展背景</h2>
+        <h2>现状与发展</h2>
+        <h3>国内现状</h3>
+        <h3>国外现状</h3>
+        <h3>发展机遇</h3>
+        <h2>理念与原则</h2>
+        <h2>功能与方案</h2>
+        <h2>规范与趋势</h2>
+    </div>
+    <script>
+        function DirectoryNav($h,config){
+            this.opts = $.extend(true,{
+                scrollThreshold:0.5,    //滚动检测阀值 0.5在浏览器窗口中间部位
+                scrollSpeed:700,        //滚动到指定位置的动画时间
+                scrollTopBorder:0,    //滚动条距离顶部多少的时候显示导航，如果为0，则一直显示
+                easing: 'swing',        //不解释
+                delayDetection:100,     //延时检测，避免滚动的时候检测过于频繁
+                scrollChange:function(){}
+            },config);
+            this.$win = $(window);
+            this.$h = $h;
+            this.$pageNavList = "";
+            this.$pageNavListLis ="";
+            this.$curTag = "";
+            this.$pageNavListLiH = "";
+            this.offArr = [];
+            this.curIndex = 0;
+            this.scrollIng = false;
+            this.init();
+        }
+
+        DirectoryNav.prototype = {
+            init:function(){
+                this.make();
+                this.setArr();
+                this.bindEvent();
+            },
+            make:function(){
+                //生成导航目录结构,这是根据需求自己生成的。如果你直接在页面中输出一个结构那也挺好不用 搞js
+                $("body").append('<div class="directory-nav" id="directoryNav"><ul></ul><span class="cur-tag"></span><span class="c-top"></span><span class="c-bottom"></span><span class="line"></span></div>>');
+                var $hs = this.$h,
+                    $directoryNav = $("#directoryNav"),
+                    temp = [],
+                    index1 = 0,
+                    index2 = 0;
+                $hs.each(function(index){
+                    var $this = $(this),
+                        text = $this.text();
+                    if(this.tagName.toLowerCase()=='h2'){
+                        index1++;
+                        if(index1%2==0) index2 = 0;
+                        temp.push('<li class="l1"><span class="c-dot"></span>'+index1+'. <a class="l1-text">'+text+'</a></li>');
+                    }else{
+                        index2++;
+                        temp.push('<li class="l2">'+index1+'.'+index2+' <a class="l2-text">'+text+'</a></li>');
+
+                    }
+                });
+                $directoryNav.find("ul").html(temp.join(""));
+
+                //设置变量
+                this.$pageNavList = $directoryNav;
+                this.$pageNavListLis = this.$pageNavList.find("li");
+                this.$curTag = this.$pageNavList.find(".cur-tag");
+                this.$pageNavListLiH = this.$pageNavListLis.eq(0).height();
+
+                if(!this.opts.scrollTopBorder){
+                    this.$pageNavList.show();
+                }
+            },
+            setArr:function(){
+                var This = this;
+                this.$h.each(function(){
+                    var $this = $(this),
+                        offT = Math.round($this.offset().top);
+                    This.offArr.push(offT);
+                });
+            },
+            posTag:function(top){
+                this.$curTag.css({top:top+'px'});
+            },
+            ifPos:function(st){
+                var offArr = this.offArr;
+                //console.log(st);
+                var windowHeight = Math.round(this.$win.height() * this.opts.scrollThreshold);
+                for(var i=0;i<offArr.length;i++){
+                    if((offArr[i] - windowHeight) < st) {
+                        var $curLi = this.$pageNavListLis.eq(i),
+                            tagTop = $curLi.position().top;
+                        $curLi.addClass("cur").siblings("li").removeClass("cur");
+                        this.curIndex = i;
+                        this.posTag(tagTop+this.$pageNavListLiH*0.5);
+                        //this.curIndex = this.$pageNavListLis.filter(".cur").index();
+                        this.opts.scrollChange.call(this);
+                    }
+                }
+            },
+            bindEvent:function(){
+                var This = this,
+                    show = false,
+                    timer = 0;
+                this.$win.on("scroll",function(){
+                    var $this = $(this);
+                    clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        This.scrollIng = true;
+                        if($this.scrollTop()>This.opts.scrollTopBorder){
+                            if(!This.$pageNavListLiH) This.$pageNavListLiH = This.$pageNavListLis.eq(0).height();
+                            if(!show){
+                                This.$pageNavList.fadeIn();
+                                show = true;
+                            }
+                            This.ifPos( $(this).scrollTop() );
+                        }else{
+                            if(show){
+                                This.$pageNavList.fadeOut();
+                                show = false;
+                            }
+                        }
+                    },This.opts.delayDetection);
+                });
+
+                this.$pageNavList.on("click","li",function(){
+                    var $this = $(this),
+                        index = $this.index();
+                    This.scrollTo(This.offArr[index]);
+                })
+            },
+            scrollTo: function(offset,callback) {
+                var This = this;
+                $('html,body').animate({
+                    scrollTop: offset
+                }, this.opts.scrollSpeed, this.opts.easing, function(){
+                    This.scrollIng = false;
+                    //修正弹两次回调 蛋疼
+                    callback && this.tagName.toLowerCase()=='body' && callback();
+                });
+            }
+        };
+
+        //实例化
+        var directoryNav = new DirectoryNav($("h2,h3"),{
+            scrollTopBorder:0   //滚动条距离顶部多少的时候显示导航，如果为0，则一直显示
+        });
+
+    </script>
+    </div>
+</div>
+<%- include('components/footer')%>

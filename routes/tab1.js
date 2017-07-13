@@ -4,7 +4,7 @@ const router = express.Router();
 const BasicInfoModel = require('../models/BasicInfo');
 const checkLogin = require('../middlewares/check').checkLogin;
 //进入目录时进行渲染
-router.get('/', checkLogin, function (req, res, next) {
+router.get('/', function (req, res, next) {
     res.render('tab1');
 });
 //查询接口

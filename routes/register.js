@@ -41,11 +41,11 @@ router.post('/', checkNotLogin, function (req, res, next) {
             user = result.ops[0];
             //将用户信息存入session
             delete user.userPwd;
-            req.session.user = user;
+            //req.session.user = user;
             //写入flash
             req.flash('success', '注册成功');
             //跳转到首页
-            res.redirect('/home');
+            res.redirect('/login');
         })
         .catch(function (e) {
             if (e.message.match('E11000 duplicate key')) {
