@@ -8,6 +8,7 @@ const express = require('express'),
 router.get('/', checkNotLogin, function (req, res, next) {
     res.render('nav');
 });
+
 router.get('/getInfo', checkLogin, function (req, res, next) {
     const name = req.session.user.userName; //get不能用req.body?
     UserModel.getUserByName(name)

@@ -22,13 +22,89 @@
             </div>
             <div class="nav navbar-nav navbar-right">
                 <% if (!user) { %>
-                <li><a href="/login">登录</a></li>
-                <li><a href="/register">注册</a></li>
-                <% } else { %>
+                <ul class="login-reg">
+                <li><a href="#" class="cd-signin">登录</a></li>
+                <li><a href="#" class="cd-signup">注册</a></li>
+                </ul>
+                 <% } else { %>
                         <li><a  id="user"></a></li>
-                        <li><a href="/logout" style="color: #393D49">退出登录</a></li>
+                        <li><a id="logout" href="/logout" style="color: #393D49">退出登录</a></li>
                 <% } %>
             </div>
+                
+                <!--login in form -----start!-->
+                    <div class="cd-user-modal">
+                        
+        <div class="cd-user-modal-container">
+            <ul class="cd-switcher">
+                <li style="list-style:none"><a href="#0" style="text-decoration:none">用户登录</a></li>
+                <li style="list-style:none"><a href="#0" style="text-decoration:none">注册新用户</a></li>
+            </ul>
+
+            <div id="cd-login" class = "is-selected"> <!-- 登录表单 -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signin-username">用户名</label>
+                        <input class="full-width has-padding has-border" id="signin-username" type="text" placeholder="输入用户名">
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">密码</label>
+                        <div>
+                             <input class="full-width has-padding has-border password" id="signin-password" type="password"  placeholder="输入密码">
+                             <img id="demo_img3" onclick="hideShowPsw(this.id,'signin-password')" src="img/invisible.png" style="margin-left: 25px; width:35px; height:30px; ">
+                        </div>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="save-me">
+                        <label for="remember-me">记住密码</label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input id="submit-signin" class="full-width2" type="button" value="登 录">
+                    </p>
+                </form>
+            </div>
+
+            <div id="cd-signup"> <!-- 注册表单 -->
+                <form class="cd-form" >
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signup-username">用户名</label>
+                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="输入用户名" onfocus="userNameFocus()" onblur="userNameBlur()">
+                    </p>
+
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">密码</label>
+                        <div>
+                        <input class="full-width has-padding has-border password" id="signup-password" type="password"  placeholder="输入密码" onfocus="pwdFocus()" onblur="pwdBlur()">
+                        <img id="demo_img1" onclick="hideShowPsw(this.id,'signup-password')" src="img/invisible.png" style="width:35px; height:30px; margin-left:25px;">
+                        </div>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-confirm-password" for="confirm-password">确认密码</label>
+                        <div>
+                             <input class="full-width has-padding has-border password" id="confirm-password" type="password" placeholder="确认密码" onblur="repwdBlur()">
+                             <img id="demo_img2" onclick="hideShowPsw(this.id,'confirm-password')" src="img/invisible.png" style="width:35px; height:30px; margin-left:25px;">
+                        </div>
+                    </p>
+
+                    <p class="fieldset">
+                        <input id="submit-signup" class="full-width2" type="button" value="注册新用户">
+                    </p>
+                </form>
+            </div>
+
+            <a href="#0" class="cd-close-form">关闭</a>
+        </div>
+    
+                    </div>
+        
+                <!--login in form ------end!-->
+
+               
         </div>
     </div>
 </nav>
@@ -49,5 +125,23 @@
              })
         }
     })
-</script>-->
+
+    //密码的显示与隐藏
+    function hideShowPsw(ImgId,InputId){
+        var demoImg = document.getElementById(ImgId);
+        var demoInput = document.getElementById(InputId);
+        //隐藏text block，显示password block
+        if (demoInput.type === "password") {
+            demoInput.type = "text";
+            demoImg.src = "img/visible.png";
+        }else {
+            demoInput.type = "password";
+            demoImg.src = "img/invisible.png";
+        }
+    }
+
+    //记住密码复选框，清空cookie
+    
+
+</script>
 <div style="height: 60px"></div>

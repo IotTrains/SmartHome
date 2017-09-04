@@ -1,9 +1,11 @@
 module.exports = function (app) {
+    
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('home');
     });
-    app.use('/register', require('./register'));
-    app.use('/login', require('./login'));
+    
+    //app.use('/register', require('./register'));//require后面的文件默认后缀为.js
+    //app.use('/login', require('./login'));
     app.use('/logout', require('./logout'));
     app.use('/home', require('./home'));
     app.use('/tab1', require('./tab1'));
@@ -12,6 +14,8 @@ module.exports = function (app) {
     app.use('/myComment', require('./myComment'));
     app.use('/nav',require('./nav'));
     app.use('/inf',require('./inf'));
+    app.use('/signup',require('./signup'));
+    app.use('/signin',require('./signin'));
     app.use(function (req, res) {
         if (!res.headerSent) {
             res.status(404).render('404');
