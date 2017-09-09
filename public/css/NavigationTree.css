@@ -1,10 +1,15 @@
-﻿h2,h3{
-    height: 400px;
+﻿h3{
+    padding:20px;
+}
+h2{
+    margin-top: 40px;
+    border-top: 1px solid #B0E0E6;
+    height: 1px;
     padding:20px;
     margin-bottom: 20px;
-    border: #ddd solid 1px;
-    border-radius: 10px
+    width:80%;
 }
+
 li{
     list-style: none;
     margin: 0;
@@ -45,7 +50,7 @@ div.inf1{
 .directory-nav .l1 a{font-size: 16px;}
 .directory-nav .l2 a{font-size: 14px;}
 .directory-nav,.directory-nav a{ color: #666;}
-.directory-nav .cur a{ color: red;}
+.directory-nav .cur a{ color: #0b8bca;}
 
 .directory-nav .line{ position: absolute; left:4px; top: 5px; bottom: 5px; z-index: 1; width: 2px; background: #ddd;}
 .directory-nav .c-top,.directory-nav .c-bottom{ position: absolute; left: 0; z-index: 2;
@@ -66,4 +71,20 @@ div.inf1{
     background: url(../img/directory-nav.png) no-repeat -271px -37px;
     -webkit-transition:top .3s ease 0s;
     transition:top .3s ease 0s;
+}
+div.con1{
+    width:75%;
+    font-size: medium;
+    padding:10px;
+    margin: 40px 20px;
+    text-indent: 2em;
+    color: #403f4b;
+}
+div.con2{
+    width:75%;
+    font-size: medium;
+    padding:10px;
+    margin: 0px 20px;
+    text-indent: 2em;
+    color: #403f4b;
 }

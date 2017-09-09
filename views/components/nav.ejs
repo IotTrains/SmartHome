@@ -8,17 +8,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            　 <a href="##" class="navbar-brand" style="color: black">智能家居</a>
+            　 <a href="/home"><img alt="智能家居" src="img/logo-new.png" width="150px" height="45px"></a>
         </div>
 
         <div class="collapse navbar-collapse" id="example-navbar-collapse">
 
             <div class="nav navbar-nav">
-                <li><a href="/home" id="nav-home" style="color: #5b6bae">主页</a></li>
-                <li><a href="/inf" id="nav-tab1" style="color: orangered;margin-left:50px">知识介绍</a></li>
-                <li><a href="/tab2" id="nav-tab2" style="color: green;margin-left:50px">应用展示</a></li>
-                <li><a href="/tab3" id="nav-tab3" style="color: purple;margin-left:50px">发展趋势</a></li>
-                <li><a href="/myComment" id="nav-comments" style="color: #807130;margin-left:50px">心得体会</a></li>
+                <li class="active"><a href="/home" id="nav-home" style="color: #ffffff;margin-left:120px">主页</a></li>
+                <li><a href="/inf" id="nav-tab1" style="color: #ffffff;margin-left:50px">知识介绍</a></li>
+                <li><a href="/tab2" id="nav-tab2" style="color: #ffffff;margin-left:50px">应用展示</a></li>
+                <li><a href="/develop" id="nav-tab3" style="color: #ffffff;margin-left:50px">发展趋势</a></li>
+                <li><a href="/myComment" id="nav-comments" style="color: #ffffff;margin-left:50px">心得体会</a></li>
             </div>
             <div class="nav navbar-nav navbar-right">
                 <% if (!user) { %>
@@ -27,8 +27,17 @@
                 <li><a href="#" class="cd-signup">注册</a></li>
                 </ul>
                  <% } else { %>
-                        <li><a  id="user"></a></li>
-                        <li><a id="logout" href="/logout" style="color: #393D49">退出登录</a></li>
+                        <div class="dropdown" style="margin-top:20px; margin-right:70px; width:100%">
+                        <a data-toggle="dropdown" id="user"></a>
+                        <ul class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="dropdownMenu1" style="width:auto">
+                        <li role="presentation">
+                           <a role="menuitem" tabindex="-1" href="/selfComments" >个人主页</a>
+                        </li>
+                        <li role="presentation">
+                           <a id="logout" role="menuitem" tabindex="-1" href="/logout">登出</a>
+                        </li>
+                        </ul>
+                        </div>
                 <% } %>
             </div>
                 
@@ -99,12 +108,7 @@
 
             <a href="#0" class="cd-close-form">关闭</a>
         </div>
-    
                     </div>
-        
-                <!--login in form ------end!-->
-
-               
         </div>
     </div>
 </nav>
@@ -113,7 +117,7 @@
         getInfo();
         //获取信息
         function getInfo() {
-            var str = '<div><span class="state"></span></div>';
+            var str = '<div><span class="state"></span><span class="caret"></span></div>';
             var url = 'http://localhost:3000/nav/getInfo';
             $.get(url,function(data){
              if(data.code==0){
@@ -139,9 +143,16 @@
             demoImg.src = "img/invisible.png";
         }
     }
-
-    //记住密码复选框，清空cookie
     
+    //导航栏选中状态切换
+    $('.navbar-nav').find('li').each(function(){
+        var a=$(this).find('a:first')[0];
+        if($(a).attr('href')==location.pathname){
+            $(this).addClass('active');
+        }else{
+            $(this).removeClass('active');
+        }
+    });
 
 </script>
 <div style="height: 60px"></div>

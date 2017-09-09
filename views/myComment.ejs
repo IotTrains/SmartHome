@@ -1,27 +1,30 @@
 <%- include('components/header')%>
+<link href="/css/my-comment.css" rel="stylesheet">
 <div class="container">
-    <div class="row">
+    <div class="feelrow">
+        <%if(!user){ %>
+        <div class="col-md-6">
+        </br></br></br></br>
+        <h3>想添加你的心得，请先登录哦~~~~~</h3>
+            </div>
+        <%  }else{ %>
         <h3>请添加心得</h3>
         <div class="col-md-6">
             <form role="form">
                 <div class="form-group">
-                    <label for="name">姓名</label>
-                    <input type="text" class="form-control" id="name" name="name"
-                           placeholder="请输入姓名">
-                </div>
-                <div class="form-group">
                     <label for="title">标题</label>
                     <input type="text" class="form-control" id="title" name="title"
-                           placeholder="请输入标题">
+                           placeholder="请输入标题" onblur="titleBlur()">
                 </div>
                 <div class="form-group">
-                    <label for="content">文本框</label>
-                    <textarea class="form-control" id="content" rows="5"></textarea>
+                    <label for="content">正文</label>
+                    <textarea class="form-control" id="content" rows="5" onblur="contentBlur()"></textarea>
                 </div>
             </form>
             <button type="button" class="btn btn-primary" id="saveInfo">提交心得</button>
             <button type="button" class="btn btn-default" id="resetInfo">清空心得</button>
         </div>
+        <% } %>
         <div class="col-md-6">
             <div id="myComments"></div>
         </div>
@@ -35,7 +38,7 @@
         $('#resetInfo').click(resetInfo);
         //获取信息
         function getInfo() {
-            var str = '<div class="panel panel-info"><div class="panel-heading"><h3 class="panel-title">我的心得</h3></div><div class="panel-body"><ul class="list-group"><li class="list-group-item">标题：<span class="title"></span></li><li class="list-group-item">内容：<span class="content"></span></div></div>';
+            var str = '<div class="panel panel-info"><div class="panel-heading"><h3 class="panel-title" ><span class="author"></span></h3></div><div class="panel-body"><ul class="list-group"><li class="list-group-item">标题：<span class="title"></span></li><li class="list-group-item">正文：<span class="content"></span></div></div>';
             var url = 'http://localhost:3000/myComment/getInfo';
             $.get(url, function (data) {
                 if (data.code == 0) {
@@ -44,11 +47,14 @@
                     $('#myComments').empty();
                     for (var i = 0; i < commentsNum; i++) {
                         $('#myComments').append(str);
+                        var authorArr=$('.author');
                         var titleArr = $('.title');
                         var contentArr = $('.content');
 
+                        authorArr.eq(i).text(data[i].author);
                         titleArr.eq(i).text(data[i].title);
                         contentArr.eq(i).text(data[i].content);
+
 
                     }
                 }
@@ -56,27 +62,46 @@
         }
         //更新信息
         function saveInfo() {
-            var url = 'http://localhost:3000/myComment/create';
+            subcheck();//提交验证
+            if(subcheck()){
+                var url = 'http://localhost:3000/myComment/create';
 
-            const params = {
-                name: $('#name').val(),
-                title: $('#title').val(),
-                content: $('#content').val()
-            }
-            $.post(url, params, function (data) {
-                if (data.code == 0) {
-                    getInfo();
-                    alert(data.content);
-                    //重新从数据库拉取信息
+                const params = {
+                    author: $('#author').val(),
+                    title: $('#title').val(),
+                    content: $('#content').val()
                 }
-            })
+                $.post(url, params, function (data) {
+                    if (data.code == 0) {
+                        getInfo();//重新从数据库拉取信息
+                        layer.msg(data.content,{
+                            icon:1,
+                            offset:'t',
+                            time:2500,
+                            end:function(){
+                                resetInfo();
+                            }
+                        });
+                    }
+                })
+            }
         }
         //清空信息
         function resetInfo() {
-            $('#name').val('');
+            $('#author').val('');
             $('#title').val('');
             $('#content').val('');
         }
     })
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.goup({
+            trigger: 100,
+            bottomOffset: 50,
+            locationOffset: 50,
+            titleAsText: true
+        });
+    });
 </script>
 <%- include('components/footer')%>

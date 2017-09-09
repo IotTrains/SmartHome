@@ -3,11 +3,11 @@
     width:50px; 
     margin-right:20px; 
     margin-top:20px;
-    font-size:16px;  
+    font-size:14px;
     text-align:center;
     list-style: none;
 }
-.navbar-right li a{color:black;}
+.navbar-right li a{color: #0b8bca;}
 .cd-user-modal {
     position: fixed;
     top: 0;

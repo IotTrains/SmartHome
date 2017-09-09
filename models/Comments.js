@@ -16,5 +16,13 @@ module.exports = {
     //获取用户全部心得(查)
     getCommentsByUid: function getCommentsByUid(uid) {
         return Comments.find({uid: uid}).exec();
+    },
+    //获取用户的全部心得
+    getComments: function getComments(){
+        return Comments
+            .find()
+            .sort({_id:-1})
+            .exec();
+
     }
 };

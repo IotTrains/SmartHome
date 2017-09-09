@@ -1,0 +1,184 @@
+<%- include('components/header')%>
+<link href="/css/demo.css" rel="stylesheet">
+<link href="/css/style2.css" rel="stylesheet">
+<link href="/css/htmleaf-demo.css" rel="stylesheet">
+<body>
+<div class="whole">
+        <!--发展历程-->
+        <div id="home" class="panel">
+			<div class="content">
+				<div class="demo">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-md-12">
+	                    <div class="main-timeline" style="margin-top:70px">
+	                        <div class="timeline">
+	                            <div class="timeline-content">
+	                                <span class="date">
+	                                    <span class="day">1994</span>
+	                                    <span class="month">|</span>
+	                                    <span class="year">1999</span>
+	                                </span>
+	                                <h2 class="title">萌芽期/智能小区期</h2>
+	                                <p class="description">这是智能家居在中国的第一个发展阶段，整个行业还处在一个概念熟悉、产品认知的阶段，这时还没有出现专业的智能家居生产厂商，只有深圳有一两家从事美国智能家居代理销售的公司从事进口零售业务，产品多销售给居住国内的欧美用户。</p>
+	                            </div>
+	                        </div>
+
+	                        <div class="timeline">
+	                            <div class="timeline-content">
+	                                <span class="date">
+	                                    <span class="day">2000</span>
+	                                    <span class="month">|</span>
+	                                    <span class="year">2005</span>
+	                                </span>
+	                                <h2 class="title">开创期</h2>
+	                                <p class="description">这个阶段，国内先后成立了五十多家智能家居研发生产企业，主要集中在深圳、上海、天津、北京、杭州、厦门等地。智能家居的市场营销、技术培训体系逐渐完善起来。此阶段，国外智能家居产品基本没有进入国内市场。</p>
+	                            </div>
+	                        </div>
+
+	                        <div class="timeline">
+	                            <div class="timeline-content">
+	                                <span class="date">
+	                                    <span class="day">2006</span>
+	                                    <span class="month">|</span>
+	                                    <span class="year">2010</span>
+	                                </span>
+	                                <h2 class="title">徘徊期</h2>
+	                                <p class="description">2005年以后，由于上一阶段智能家居企业的野蛮成长和恶性竞争，给智能家居行业带来了极大的负面影响：包括过分夸大智能家居的功能而实际上无法达到这个效果、厂商只顾发展代理商却忽略了对代理商的培训和扶持导致代理商经营困难、产品不稳定导致用户高投诉率。行业用户、媒体开始质疑智能家居的实际效果，由原来的鼓吹变得谨慎，连续几年市场销售出现增长减缓甚至部分区域出现了销售额下降的现象。</p>
+	                            </div>
+	                        </div>
+
+	                        <div class="timeline">
+	                            <div class="timeline-content">
+	                                <span class="date">
+	                                    <span class="day">2011</span>
+	                                    <span class="month">|</span>
+	                                    <span class="year">2020</span>
+	                                </span>
+	                                <h2 class="title">融合演变期</h2>
+	                                <p class="description">进入2011年以来，市场明显看到了增长的势头，而且宏观的行业背景是房地产受到调控。智能家居的放量增长说明智能家居行业进入了一个拐点，由徘徊期进入了新一轮的融合演变期。接下来的三到五年，智能家居一方面进入一个相对快速的发展阶段，另一方面协议与技术标准开始主动互通和融合，行业并购现象开始出来甚至成为主流。</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+			</div>
+		</div>
+		<!-- /发展历程 -->
+		
+		<!-- 市场规模 -->
+		<div id="contact" class="panel">
+			<div class="content">
+			    <div id="echartsmain" class="text-center" style="height:450px;margin-top:150px;margin-left:170px; width: 750px"></div>
+			    <!--<div id="text" class="col-md-5" style="float:right; margin-top:220px; font-size: 20px; width: 35%; color:white; background-color:		#96CDCD">
+			    	随着大数据、人工智能等技术的突飞猛进，智能家居在生活中扮演了越来越重要的角色。据前瞻产业研究院日前发布的《中国智能家居设备行业前瞻与投资策略规划报告》数据显示，2016年，我国智能家居市场规模达到605.7亿元，同比增长50.15％。预计未来几年智能家居将迎来爆发期，年增长率将保持在50％左右。到2018年，智能家居市场规模或将达到1396亿元。在2020年前，中国有望成为亚洲最大的智能家居市场。
+			    </div>-->
+			</div>
+		</div>
+		<!-- /市场规模 -->
+
+		<!-- Header with Navigation -->
+		<div id="header">
+			<ul id="navigation">
+				<li><a id="link-home" href="#home">发展历程</a></li>
+				<li><a id="link-contact" href="#contact">市场规模</a></li>
+			</ul>
+			<!-- Demo Nav -->
+		</div>
+</div>
+</body>
+<script type="text/javascript">
+	// 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('echartsmain'));
+    // 指定图表的配置项和数据
+	var option = {
+	    title: {
+	        text: '中国智能家居市场规模及预测',
+	        subtext: '数据来源：前瞻产业研究院',
+	        subtextStyle:{
+	        	color:'#000'
+	        },
+	        x:'center'
+	    },
+	    tooltip: {
+	        trigger: 'axis',
+	        axisPointer: {
+	            type: 'cross',
+	            crossStyle: {
+	                color: '#999'
+	            }
+	        }
+	    },
+	    toolbox: {
+	        feature: {
+	            dataView: {show: true, readOnly: false},
+	            magicType: {show: true, type: ['line', 'bar']},
+	            restore: {show: true},
+	            saveAsImage: {show: true}
+	        }
+	    },
+	    legend: {
+	        data:['市场规模','增长率'],
+	        y:'bottom'
+	    },
+	    xAxis: [
+	        {
+	            type: 'category',
+	            data: ['2012','2013','2014','2015','2016','2017E','2018E','2019E','2020E'],
+	            axisPointer: {
+	                type: 'shadow'
+	            },
+	            splitLine: {
+	                 show: false
+	    		}
+	        }
+	    ],
+	    yAxis: [
+	        {
+	            type: 'value',
+	            name: '市场规模',
+	            min: 0,
+	            max: 3500,
+	            interval: 500,
+	            axisLabel: {
+	                formatter: '{value} 亿元'
+	            },
+	            splitLine: {
+	                 show: false
+	    		}
+	        },
+	        {
+	            type: 'value',
+	            name: '增长率',
+	            min: 20,
+	            max: 60,
+	            interval: 5,
+	            axisLabel: {
+	                formatter: '{value} %'
+	            },
+	            splitLine: {
+	                 show: false
+	    		}
+	        }
+	    ],
+	    series: [
+	        {
+	            name:'市场规模',
+	            type:'bar',
+	            data:[150,205.3,286.1,403.4,605.7,916.6,1396.5,2139.8,3294.1]
+	        },
+	        {
+	            name:'增长率',
+	            type:'line',
+	            yAxisIndex: 1,
+	            data:[,36.87,39.36,41.00,50.15,51.33,52.36,53.23,53.94]
+	        }
+	    ]
+	};
+	// 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+</script>
+<%- include('components/footer')%>

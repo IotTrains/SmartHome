@@ -1,9 +1,7 @@
 
 	.main_menu{
 		font-family: 微软雅黑;
-		background: #fff;
-		padding: 30px;
-		margin:50px auto;
+		background: #f5f5f5;
         overflow: hidden;
 	}
 
@@ -13,29 +11,16 @@
 		float: left;
 		border-right: 1px solid #aaa;
 	}
-/*position 菜单背景图标
+/*position 菜单背景图标*/
 	.positionIicon{
-		display: inline;
+		display: inline block;
 		width: 32px;
 		height: 32px;
 		margin: 0px 4px;
 		float: left;
 		margin-right: 10px;
-	}*/
-/*menu图标
-	.q-menu-img{
-		background: url("../img/iconfont-kuaisulu.png");
 	}
-	
-	.q-menu-doit{
-		background: url("../img/iconfont-0bangzhushouce.png");
-	}
-
-	.q-menu-three{
-		background: url("../img/iconfont-wenti.png");
-	}*/
-
-
+/*menu图标*/
 	.main_menu .menu h3{
 		font-size: 20px;
 		cursor: pointer;
@@ -55,6 +40,7 @@
 		-moz-border-radius: 14px;
 		-moz-border-radius:14px;
 		color:#fff;
+		text-decoration: none;
 	
 	}
 
@@ -127,14 +113,13 @@
 
 	}
 /*第二个菜单下的文档内容*/
-
-	.main_menu .content .menu2 .tab{
-		display: none ;
+	.main_menu .content .menu2 .tab {
+		display: none;
 	}
+
 	.main_menu .content .menu2 .active{
 		display: block;
 	}
-
 
 	.main_menu .content .menu2 .tab p{
 		font-size: 14px;
@@ -149,10 +134,10 @@
 
 	}
 /*第三个菜单下的文档内容*/
-
 	.main_menu .content .menu3 .tab {
 		display: none;
 	}
+
 	.main_menu .content .menu3 .active{
 		display: block;
 	}

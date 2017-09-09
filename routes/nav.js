@@ -1,15 +1,13 @@
 const express = require('express'),
     router = express.Router(),
-    UserModel = require('../models/users'),
-    checkNotLogin = require('../middlewares/check').checkNotLogin;
-    checkLogin = require('../middlewares/check').checkLogin;
+    UserModel = require('../models/users');
+   
 
-//GET /login 登录页
-router.get('/', checkNotLogin, function (req, res, next) {
+router.get('/', function (req, res, next) {
     res.render('nav');
 });
 
-router.get('/getInfo', checkLogin, function (req, res, next) {
+router.get('/getInfo', function (req, res, next) {
     const name = req.session.user.userName; //get不能用req.body?
     UserModel.getUserByName(name)
         .then(function (user) {

@@ -1,0 +1,77 @@
+<%- include('components/header')%>
+    <% if(!user) { %>
+        <div class="col-md-6 text-center col-md-offset-3" style="margin-top:100px">
+            <h3>登录后才可查看个人心得哦~~~~</h3>
+        </div>
+    <% }else{ %>
+    	<div class="col-md-6 col-md-offset-3" >
+    		<h3 class="col-md-offset-5">我的心得</h3>
+    		<div id="selfComments"></div>
+            <div id="no-signin"></div>
+    	</div>
+    <% } %>
+	<script>
+    	$(document).ready(function () {
+    		getInfo();
+    		function getInfo() {
+                var str = '<div class="panel panel-info"><div class="panel-heading"><h3 class="panel-title"><span class="title" id="title"></span></h3></div><div class="panel-body"><ul class="list-group"><li class="list-group-item"><span class="content"></span></div><div class="delete"><button type="button" class="delbtn btn-primary" id="deleteInfo">删除</button></div></div>';
+                var url = 'http://localhost:3000/selfComments/getInfo';
+                $.get(url, function (data) {
+                    if (data.data.length > 0) {
+                        var data = data.data;
+                        console.log(data);
+                        var commentsNum = data.length;
+                        $('#selfComments').empty();
+                        for (var i = 0; i < commentsNum; i++) {
+                            console.log('why');
+                            $('#selfComments').append(str);
+                            var titleArr = $('.title');
+                            var contentArr = $('.content');
+                            var title=$('#title');
+
+                            titleArr.eq(i).text(data[i].title);
+                            contentArr.eq(i).text(data[i].content);
+                            //添加自定义属性,保存心得的_id
+                            title.eq(i).prop('comment_id',data[i]._id);
+
+                        }
+
+                    }else{
+                        var string='<div class="text-center" style="margin-top:150px"><h4>你还没有添加任何心得<h4><a href="/myComment" class="text-center">去添加</a></div>';
+                        $('#no-signin').empty();
+                        $('#no-signin').append(string);
+                    }
+                });
+            }
+
+            $(document).on('click','#deleteInfo',function(){
+                var comment_id=$('.title').prop('comment_id');
+                
+                var url='http://localhost:3000/selfComments/deleteInfo';
+                $.post(url,{comment_id:comment_id},function(data){
+                    console.log(data);
+                    if(data.ok==1){
+                        layer.msg('删除成功',{
+                            icon:1,
+                            offset:'t',
+                            time:2000,
+                            end:function(){
+                                location.reload();
+                            }
+                        });
+                    }
+                });
+            })
+    	})
+	</script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $.goup({
+            trigger: 100,
+            bottomOffset: 50,
+            locationOffset: 50,
+            titleAsText: true
+        });
+    });
+</script>
+<%- include('components/footer')%>

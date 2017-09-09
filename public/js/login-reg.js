@@ -1,5 +1,4 @@
 jQuery(document).ready(function($){
-    //var layer=layui.layer;
     var $form_modal = $('.cd-user-modal'),
         $form_login = $form_modal.find('#cd-login'),
         $form_signup = $form_modal.find('#cd-signup'),
@@ -7,14 +6,12 @@ jQuery(document).ready(function($){
         $tab_login = $form_modal_tab.children('li').eq(0).children('a'),
         $tab_signup = $form_modal_tab.children('li').eq(1).children('a'),
         $main_nav = $('.navbar-right');
+
     //点击弹出登陆注册界面
-    //$main_nav.on('click', function(event){
     $(document).on('click','.navbar-right',function(event){
         if( $(event.target).is('.cd-signin') ) {
-            //alert('why');
-            // on mobile close submenu
+
             $main_nav.children('ul').toggleClass('is-visible');
-            //show modal layer
             $form_modal.addClass('is-visible');
             //show the selected form
             login_selected();
@@ -32,14 +29,11 @@ jQuery(document).ready(function($){
     });
 
     //点击空白处关闭登录注册界面
-    
-    //$('.cd-user-modal').on('click', function(event){
     $(document).on('click','.cd-user-modal',function(event){
         //console.log('I am excuted!');
         if( $(event.target).is($form_modal) || $(event.target).is('.cd-close-form') ) {
            $form_modal.removeClass('is-visible');
            layer.closeAll('tips');
-           //$form_modal.style.display="none";
         }
     });
     //ESC键关闭登录注册界面
@@ -86,7 +80,8 @@ jQuery(document).ready(function($){
     }
     //注册ajax向后台传数据
     $('#submit-signup').click(function(e){
-        regcheck();
+        regcheck();//注册验证
+        console.log(regcheck());
         if(regcheck()){
             //获取用户名，密码，确认密码
             var username=$('#signup-username').val();
@@ -106,14 +101,13 @@ jQuery(document).ready(function($){
                 repassword:repassword
               },
               success:function(data){
-                if(data){//注册成功，转到登陆界面
-                   //alert("success!");
-                   openmsg('注册成功！请登录',6);
-                   login_selected();
-                }
-                else{//注册失败
-                   //alert("error!");
-                   openmsg('注册失败！',5);
+                try{
+                   if(data){//注册成功，转到登陆界面
+                      openmsg('注册成功！请登录',6);
+                      login_selected();
+                    }
+                }catch(e){
+                    alert('注册失败：'+e);
                 }
               }
 
@@ -141,71 +135,66 @@ jQuery(document).ready(function($){
                 pwd:pwd
             },
             success:function(data){
-                //alert(data.status);
-                if(data.status==0){//登陆成功
-                    //openmsg('登陆成功！',6);
-                    //alert('success');
-                    //console.log($('#save-me').prop('checked'));
-                    //登陆成功后判断是否存储Cookie
-                    if($('#save-me').prop('checked')){//复选框选中，创建Cookie，有效期7天
-                        $.cookie('signin-username',name,{expires:7});
-                        $.cookie('signin-password',pwd,{expires:7});
-                    }else{//复选框未选中，删除之前存储的Cookie
-                        $.cookie('signin-username','',{expires:-1});
-                        $.cookie('signin-password','',{expires:-1});
-                    }
-                    //console.log($.cookie('signin-username'));
-                    $form_modal.removeClass('is-visible');
-                    //openmsg('登陆成功！',6);
-                    //window.location.href = document.referrer;
-                    //location.reload();//因为有这个刷新页面layer弹出层无法显示
-                    //所以想办法让layer弹出层显示消失后再刷新页面，调用end方法
-                    var layer=layui.layer;
-                    layer.msg('登录成功',{
-                        icon:6,
-                        offset:'t',
-                        time:2000,
-                        end:function(){
-                            location.reload();
+                try{
+                    if(data.status==0){//登陆成功
+                       //登陆成功后判断是否存储Cookie
+                       if($('#save-me').prop('checked')){//复选框选中，创建Cookie，有效期7天
+                          $.cookie('signin-username',name,{expires:7});
+                          $.cookie('signin-password',pwd,{expires:7});
+                        }else{//复选框未选中，删除之前存储的Cookie
+                          $.cookie('signin-username','',{expires:-1});
+                          $.cookie('signin-password','',{expires:-1});
                         }
-                    });
-                }
-                else if(data.status==1){//用户不存在
-                    //alert(data.status);
-                    //alert('1 failed');
-                    openmsg('用户不存在!',5);
-                }else if(data.status==2){//密码不正确
-                    //alert('2 failed');
-                    openmsg('密码错误！',5);
+                    
+                        $form_modal.removeClass('is-visible');
+                        //location.reload();//因为有这个刷新页面layer弹出层无法显示
+                        //所以想办法让layer弹出层显示消失后再刷新页面，调用end方法
+                        layer.msg('登录成功',{
+                            icon:6,
+                            offset:'t',
+                            time:2000,
+                            end:function(){
+                              location.reload();
+                            }
+                        });
+                    }
+                    else if(data.status==1){//用户不存在
+                       openmsg('用户不存在!',5);
+                    }else if(data.status==2){//密码不正确
+                       openmsg('密码错误！',5);
+                    }
+                }catch(e){
+                    alert('登陆失败：'+e);
                 }
             }
         });
     });
 
     //退出登录
-    /*$('#logout').click(function(e){
+    $('#logout').click(function(e){
         $.get('/logout',function(data){
-            if(!data){
-                console.log(data);
-                //$form_modal.removeClass('is-visible');
-                //alert('登出成功!')
-                //openmsg('登出成功！',6);
-                var layer=layui.layer;
-                layer.msg('登出成功',{
-                    icon:6,
-                    offset:'t',
-                    end:function(){
-                          //window.location.href = document.referrer;
-                          self.location=document.referrer;
+            try{
+                var href=window.location.href;
+                if(!data){
+                    //console.log(href);
+                    $form_modal.removeClass('is-visible');
+                    location.replace(href);
+                    
+                    layer.msg('登出成功',{
+                        icon:6,
+                        offset:'t',
+                        time:2000, 
+                        end:function(){
+                          location.reload();//刷新页面
                         }
-                 });
-                //alert('why');
-                //self.location=document.referrer;
-               // location.reload();
-                //window.location.href = document.referrer;
-            }
+                    });
+                    
+                }
+           }catch(e){
+               alert("登出失败："+e);
+           }
         });
-    });*/
+    });
 
 });
 
@@ -227,11 +216,9 @@ jQuery.fn.putCursorAtEnd = function() {
 };
 
 function openmsg(msg,num){
-    var layer=layui.layer;
     layer.msg(msg,{
         icon:num,
         offset:'t',
-        //time:1500
     });
 }
 
